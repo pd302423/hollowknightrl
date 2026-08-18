@@ -1,0 +1,32 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# --- C# / .NET build outputs ---
+bin/
+obj/
+*.user
+
+# --- Training artifacts (too big for git) ---
+runs/
+wandb/
+checkpoints/
+*.pt
+*.ckpt
+data/
+
+# --- GAME FILES: never commit. Copyrighted, not ours. ---
+*.dll
+*.exe
+game/
+hollow_knight_Data/
+
+# --- Big media (keep clips local, link them instead) ---
+*.mp4
+*.mkv
+
+# --- Windows junk ---
+Thumbs.db
+desktop.ini
