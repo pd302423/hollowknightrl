@@ -35,7 +35,35 @@ A single end-to-end RL policy that beats Hollow Knight from a fresh save is an *
 
 Hollow Knight is Montezuma's Revenge with a hundred times the horizon and combat that requires frame-level execution. Nobody has solved this class of problem end-to-end without either human demonstrations or a hierarchical decomposition.
 
-**The honest, achievable version:**
+### UPDATE 2026-08-20 — the full game is back in scope, as a staged stretch
+
+Two things changed this assessment:
+
+1. **Prior art check.** HK boss RL is already done several times over — `AdityaJain1030/HKRL`
+   (mod + gym env), `dkleitsas/SilksongRL` (C# mod + socket + PPO), `ailec0623/DQN_HollowKnight`,
+   plus a Stanford CS224R course project. So "RL beats False Knight" is **not novel**.
+   Meanwhile a search for *any* RL agent completing a metroidvania start-to-finish returns
+   **nothing**. The ambitious target is the one that's actually unclaimed.
+
+2. **VLM/LLM game agents matured in 2025-26** (PokeGym, OmniGameArena, GamingAgent @ ICLR 2026).
+   A VLM planner handling long-horizon goal selection, with RL handling combat and movement,
+   is an architecture the older hierarchical-RL literature didn't have. Pure RL still will not
+   do it — HAC Explore tops out around 1,000 primitive actions and an any% run is ~54,000.
+
+**Revised plan: bank the safe deliverables, then swing.**
+
+| Phase | Status |
+|---|---|
+| Open-source environment | portfolio-safe |
+| False Knight solved | portfolio-safe |
+| Multi-boss incl. Radiant | portfolio-safe |
+| **Full-game hybrid attempt** | **pure upside — last 4 months only** |
+
+Each is independently presentable, so a failed full-run costs nothing. Budget re-costed at
+~1,250 hrs (school-day hour + vacation sprints), against ~1,320 hrs of estimated work.
+See `SCHEDULE.md`.
+
+**The fallback framing if the full run doesn't land:**
 
 > A **hierarchical agent** for Hollow Knight: learned low-level combat policies (one per boss, or one multi-task policy), learned/planned navigation over a room graph, and a high-level route executor. Demonstrated on the full Hall of Gods boss roster, and on a routed any% completion run.
 
@@ -238,6 +266,15 @@ Do **not** try to learn everything before starting. Each stage below ends with s
 
 ## 4. Timeline
 
+> ⚠️ **SUPERSEDED (2026-08-18).** The table below assumed 10–15 hrs/week. Actual budget is
+> ~1 hr/day (~6–8 hrs/week) through Mar 2027. See **`SCHEDULE.md`** for the real month-by-month
+> plan. Two changes carried over from that recost:
+> - **P6 (navigation) and P7 (full-game run) are cut** to "future work" — they don't fit in
+>   ~1000 available hours. Portfolio target is now P5: multi-boss agent incl. Radiant tier,
+>   plus the open-source environment.
+> - `WEEK1.md` is ~20 hrs of work, i.e. **three weeks** at this pace, not one.
+
+
 Assumes ~10–15 hrs/week during school, more in summer. Slip factor: assume everything takes **1.5–2×** your estimate.
 
 | Phase | Window | Goal | Shippable artifact |
@@ -307,7 +344,9 @@ At 8 instances running 8 hrs/night, 250 nights/year = **16,000 instance-hours/ye
 
 **Tier 0 — start today, $0.** Whatever machine runs Hollow Knight. Do P0–P2 and the first False Knight runs on it. A GTX 1650 / integrated graphics is fine for structured-state PPO. Do not buy anything yet.
 
-**Tier 1 — the training rig (buy around P3/P4, ~mid-2027).** This is the right purchase point: you'll know what you actually need, and hardware gets cheaper.
+**Tier 1 — the training rig.** ⚠️ **Revised 2026-08-18:** the original "buy ~mid-2027" advice is wrong — an international relocation is planned for 2027, and buying a desktop months before shipping it across a border is a bad trade (customs, voltage, warranty, resale). Either buy *early* (late 2026, use it for 6+ months first) or buy *after* the move settles (late 2027), and rent cloud GPU in the gap. Decide by Jan 2027.
+
+When you do buy, this is the spec:
 
 | Part | Spec | Why |
 |---|---|---|

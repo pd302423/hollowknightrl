@@ -36,3 +36,8 @@ Never delete an entry. Never tidy up the failures — they are the most valuable
 **Next:** Day 2 — install .NET SDK, Scarab, DebugMod, ILSpy. Join modding Discord.
 
 ---
+
+
+
+LOG:19.8.26-
+I installed scarab, ILspy, debugMOD in scarab and backed-up all the files 

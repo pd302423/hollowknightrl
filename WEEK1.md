@@ -12,6 +12,11 @@ If it doesn't, you find out in 7 days instead of 7 months.
 
 ---
 
+> ⚠️ **Code in this file is a REFERENCE, not verified truth.** The Day 3 snippet was wrong
+> once already (`GetName()` is sealed and cannot be overridden). Before trusting any API
+> name here, open `Assembly-CSharp.dll` in ILSpy and confirm it exists with that signature
+> in *your* game version.
+
 ## The three gates
 
 If the week collapses, these are the only things that matter. Do them in this order.
@@ -311,7 +316,11 @@ namespace HkRl
     {
         internal static HkRlMod Instance;
 
-        public override string GetName() => "HkRl";
+        // NOTE: GetName() is `virtual sealed` in this API version — it CANNOT be
+        // overridden. The name is passed to the base constructor instead.
+        // Verified 2026-08-20 by reflecting on Assembly-CSharp.dll.
+        public HkRlMod() : base("HkRl") { }
+
         public override string GetVersion() => "0.1.0";
 
         public override void Initialize()

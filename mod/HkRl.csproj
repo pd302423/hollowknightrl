@@ -1,0 +1,68 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Hollow Knight runs Mono, which implements the .NET Framework 4.7.2 API.
+         Your modern SDK compiles AGAINST that older API surface. -->
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>HkRl</AssemblyName>
+    <RootNamespace>HkRl</RootNamespace>
+    <LangVersion>latest</LangVersion>
+
+    <!-- Only compile what's in src/, and don't bury the DLL in a net472/ subfolder -->
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+
+    <!-- Silences a harmless NuGet audit warning on net472 -->
+    <NuGetAuditMode>direct</NuGetAuditMode>
+
+    <!-- EDIT if your Steam library ever moves -->
+    <HKManaged>C:\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed</HKManaged>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="src\**\*.cs" />
+  </ItemGroup>
+
+  <!-- You have no Visual Studio, so the .NET Framework 4.7.2 reference assemblies
+       aren't on this machine. This package ships them. Without it the build fails with
+       "The reference assemblies for .NETFramework,Version=v4.7.2 were not found." -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <!-- The game's own assemblies. Private=False means "compile against these but DO NOT
+       copy them next to my DLL" — copying them causes type-identity conflicts at load. -->
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(HKManaged)\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(HKManaged)\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(HKManaged)\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>$(HKManaged)\UnityEngine.Physics2DModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MMHOOK_Assembly-CSharp">
+      <HintPath>$(HKManaged)\MMHOOK_Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Every build drops the DLL straight into the game. No manual copying, ever. -->
+  <Target Name="DeployMod" AfterTargets="Build">
+    <MakeDir Directories="$(HKManaged)\Mods\HkRl" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(HKManaged)\Mods\HkRl" />
+    <Message Importance="high" Text="==> Deployed $(TargetFileName) to $(HKManaged)\Mods\HkRl" />
+  </Target>
+
+</Project>
